@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-List | Prueba Técnica</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-animation">
+                    <i class="fas fa-check-circle logo-icon"></i>
+                </div>
+                <h1 class="title">
+                    <span class="title-gradient">Todo-List</span>
+                </h1>
+            </div>
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Seccion de estadisticas -->
+            <section class="stats-section animate-slide-up">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon total-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="total-tasks">0</h3>
+                            <p class="stat-label">Total Tareas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="pending-tasks">0</h3>
+                            <p class="stat-label">Pendientes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon completed-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="completed-tasks">0</h3>
+                            <p class="stat-label">Completadas</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- agregar tareas -->
+            <section class="add-task-section animate-slide-up" style="animation-delay: 0.1s;">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i> Agregar Nueva Tarea
+                </h2>
+                <form id="task-form" class="task-form">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="task-input" 
+                            class="task-input" 
+                            placeholder="✏️ Escribe tu tarea aquí..." 
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="add-btn" id="add-btn">
+                            <i class="fas fa-plus"></i> Agregar
+                        </button>
+                    </div>
+                    <p class="input-hint">Presiona Enter o haz clic en Agregar</p>
+                </form>
+            </section>
+
+            <!-- Seccion de filtros -->
+            <section class="filters-section animate-slide-up" style="animation-delay: 0.2s;">
+                <h2 class="section-title">
+                    <i class="fas fa-filter"></i> Filtros
+                </h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-list"></i> Todas
+                    </button>
+                    <button class="filter-btn" data-filter="pending">
+                        <i class="fas fa-clock"></i> Pendientes
+                    </button>
+                    <button class="filter-btn" data-filter="completed">
+                        <i class="fas fa-check"></i> Completadas
+                    </button>
+                </div>
+            </section>
+
+            <!-- Seccion delista de tareas -->
+            <section class="tasks-section animate-slide-up" style="animation-delay: 0.3s;">
+                <h2 class="section-title">
+                    <i class="fas fa-list-check"></i> Mis Tareas
+                    <span class="tasks-count">(<span id="visible-tasks">0</span> visibles)</span>
+                </h2>
+                
+                <div class="tasks-container">
+                    <ul id="tasks-list" class="tasks-list">
+                        <!-- Las tareas se agregarán aquí dinámicamente. -->
+                        <li class="empty-state" id="empty-state">
+                            <div class="empty-icon">
+                                <i class="far fa-clipboard"></i>
+                            </div>
+                            <h3>¡No hay tareas!</h3>
+                            <p>Agrega tu primera tarea usando el formulario de arriba.</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">
+                    <i class="fas fa-code"></i> Prueba Técnica - Todo-List | 
+                    <span class="tech-stack">HTML5 • CSS3 • JavaScript Vanilla</span>
+                </p>
+                <p class="footer-info">
+                    <i class="fas fa-graduation-cap"></i> UTSJR | 
+                    <i class="fas fa-user"></i> Alumno: Pichardo Resendiz Jesus Fernando
+                </p>
+            </div>
+        </footer>
+
+        <!-- modal de confirmacion -->
+        <div class="modal" id="confirm-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fas fa-exclamation-triangle modal-icon"></i>
+                    <h3>Confirmar Eliminación</h3>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que quieres eliminar esta tarea?</p>
+                    <p class="modal-task-text" id="modal-task-text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn cancel-btn" id="cancel-delete">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button class="modal-btn delete-btn" id="confirm-delete">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div class="toast" id="toast">
+            <div class="toast-content">
+                <i class="fas fa-check-circle toast-icon"></i>
+                <span class="toast-message" id="toast-message"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
