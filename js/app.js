@@ -78,12 +78,12 @@ const taskManager = {
     addTask: (text) => {
         if (!text.trim()) {
             utils.animateElement(elements.taskInput, 'animate-shake');
-            utils.showNotification('⚠️ La tarea no puede estar vacía', 'warning');
+            utils.showNotification('La tarea no puede estar vacía', 'warning');
             return false;
         }
         
         if (text.length > CONFIG.MAX_TASK_LENGTH) {
-            utils.showNotification(`⚠️ La tarea no puede tener más de ${CONFIG.MAX_TASK_LENGTH} caracteres`, 'warning');
+            utils.showNotification(`La tarea no puede tener más de ${CONFIG.MAX_TASK_LENGTH} caracteres`, 'warning');
             return false;
         }
         
@@ -101,7 +101,7 @@ const taskManager = {
         updateStats();
         elements.taskInput.value = '';
         
-        utils.showNotification('✅ Tarea agregada correctamente');
+        utils.showNotification('Tarea agregada correctamente');
         utils.animateElement(elements.taskForm, 'animate-pulse');
         
         return true;
@@ -117,7 +117,7 @@ const taskManager = {
             updateStats();
             
             const status = tasks[taskIndex].completed ? 'completada' : 'pendiente';
-            utils.showNotification(`📝 Tarea marcada como ${status}`);
+            utils.showNotification(`Tarea marcada como ${status}`);
         }
     },
     
@@ -130,7 +130,7 @@ const taskManager = {
             renderTasks();
             updateStats();
             
-            utils.showNotification('🗑️ Tarea eliminada correctamente');
+            utils.showNotification('Tarea eliminada correctamente');
             return taskText;
         }
         return null;
@@ -144,7 +144,7 @@ const taskManager = {
             utils.saveToLocalStorage();
             renderTasks();
             
-            utils.showNotification('✏️ Tarea actualizada correctamente');
+            utils.showNotification('Tarea actualizada correctamente');
             return true;
         }
         return false;
@@ -292,7 +292,7 @@ const setupEventListeners = () => {
         if (taskToDelete) {
             const deletedText = taskManager.deleteTask(taskToDelete);
             if (deletedText) {
-                utils.showNotification(`🗑️ Tarea eliminada: "${deletedText}"`);
+                utils.showNotification(`Tarea eliminada: "${deletedText}"`);
             }
             hideDeleteConfirmation();
         }
@@ -343,7 +343,7 @@ const setupEventListeners = () => {
     elements.taskInput.addEventListener('input', () => {
         if (elements.taskInput.value.length > CONFIG.MAX_TASK_LENGTH) {
             elements.taskInput.style.borderColor = 'var(--danger-color)';
-            utils.showNotification(`⚠️ Máximo ${CONFIG.MAX_TASK_LENGTH} caracteres`, 'warning');
+            utils.showNotification(`Máximo ${CONFIG.MAX_TASK_LENGTH} caracteres`, 'warning');
         } else {
             elements.taskInput.style.borderColor = '';
         }
@@ -352,7 +352,7 @@ const setupEventListeners = () => {
 
 // ===== INITIALIZATION =====
 const init = () => {
-    console.log('🚀 Iniciando Todo List App...');
+    console.log('Iniciando Todo List App...');
     
     // Load data from localStorage
     utils.loadFromLocalStorage();
@@ -380,13 +380,13 @@ const init = () => {
     // Show welcome message
     setTimeout(() => {
         if (tasks.length === 0) {
-            utils.showNotification('👋 ¡Bienvenido a Todo List! Agrega tu primera tarea.');
+            utils.showNotification('¡Bienvenido a Todo List! Agrega tu primera tarea.');
         } else {
-            utils.showNotification(`📋 Cargadas ${tasks.length} tareas desde el almacenamiento local`);
+            utils.showNotification(`Cargadas ${tasks.length} tareas desde el almacenamiento local`);
         }
     }, 1000);
     
-    console.log('✅ App inicializada correctamente');
+    console.log('App inicializada correctamente');
 };
 
 // ===== START THE APP =====
